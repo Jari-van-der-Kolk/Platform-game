@@ -33,6 +33,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private float moveSpeed = 40f;
     [SerializeField] private float jumpVelocity = 100f;
 
+    [Header("Ground check  position")]
     [SerializeField] private Vector2 groundCheckPosition;
     [SerializeField] private Vector2 groundCheckSize;
 
@@ -86,8 +87,7 @@ public class Player : MonoBehaviour {
     }
 
     private bool IsGrounded() {
-        RaycastHit2D raycastHit2d = Physics2D.BoxCast(transform.position + (Vector3)groundCheckPosition, groundCheckSize, 0f, Vector2.down, 1f, platformsLayerMask);
-        return raycastHit2d.collider != null;
+        return Physics2D.BoxCast(transform.position + (Vector3)groundCheckPosition, groundCheckSize, 0f, Vector2.down, 0, platformsLayerMask);
     }
     
     private void HandleMovement_FullMidAirControl() {
