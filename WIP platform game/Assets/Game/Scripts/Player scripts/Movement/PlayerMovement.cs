@@ -19,7 +19,7 @@ using UnityEngine;
 
 
 
-public class Player : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour {
 
     [SerializeField] private LayerMask platformsLayerMask;
     //private Player_Base playerBase;
@@ -86,7 +86,8 @@ public class Player : MonoBehaviour {
         }
     }
 
-    private bool IsGrounded() {
+    private bool IsGrounded()
+    {
         return Physics2D.BoxCast(transform.position + (Vector3)groundCheckPosition, groundCheckSize, 0f, Vector2.down, 0, platformsLayerMask);
     }
     
