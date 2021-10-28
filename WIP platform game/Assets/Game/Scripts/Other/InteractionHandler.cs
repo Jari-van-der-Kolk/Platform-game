@@ -18,7 +18,7 @@ public class InteractionHandler : MonoBehaviour
             var o = actionCheck.results[i].collider;
             if (o != null)
             {
-                o.GetComponent<IInteract>();
+                o.GetComponent<IInteract>().Action();
             }
         }
     }
