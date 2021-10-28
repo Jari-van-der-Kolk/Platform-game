@@ -2,13 +2,20 @@ using UnityEngine;
 
 namespace Game.Scripts.Health
 {
-    public class HealthBehaviour : MonoBehaviour
+    public abstract class HealthBehaviour : MonoBehaviour
     {
-        private int health;
+        [SerializeField] private HealthData startingHealthData;
+        
+        public int health
+        {
+            get => startingHealthData.startingHealth;
+            set => startingHealthData.startingHealth = value;
+        }
 
         public void ModifyHealth(int value)
         {
             health += value;
+            Debug.Log(health);
         }
     }    
 }
