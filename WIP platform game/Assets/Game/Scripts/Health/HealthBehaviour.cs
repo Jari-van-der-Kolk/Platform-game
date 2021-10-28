@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game.Scripts.Health
@@ -6,10 +7,11 @@ namespace Game.Scripts.Health
     {
         [SerializeField] private HealthData startingHealthData;
         
-        public int health
+        public int health { get; private set; }
+
+        private void Awake()
         {
-            get => startingHealthData.startingHealth;
-            set => startingHealthData.startingHealth = value;
+            health = startingHealthData.startingHealth;
         }
 
         public void ModifyHealth(int value)

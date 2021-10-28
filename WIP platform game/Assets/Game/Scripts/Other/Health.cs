@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using Game.Scripts.Health;
 using UnityEngine;
 
-public abstract class Health : HealthBehaviour, IInteract
+public class Health : HealthBehaviour
 {
-    
-    public void Action()
+
+    void Start()
     {
-        ModifyHealth(4);
-        gameObject.SetActive(false);
+        Debug.Log(health);   
     }
 
 }
