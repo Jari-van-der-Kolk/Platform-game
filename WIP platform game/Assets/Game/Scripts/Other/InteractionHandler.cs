@@ -3,18 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpItems : MonoBehaviour
+public class InteractionHandler : MonoBehaviour
 {
 
     private IActionCheck actionCheck;
     
+    private void Awake() => actionCheck = GetComponent<IActionCheck>();
     
-    private void Awake()
-    {
-        actionCheck = GetComponent<IActionCheck>();
-    }
-
-   
     void Update()
     {
         actionCheck.Check();
@@ -23,7 +18,7 @@ public class PickUpItems : MonoBehaviour
             var o = actionCheck.results[i].collider;
             if (o != null)
             {
-                o.gameObject.SetActive(false);
+                o.GetComponent<IInteract>();
             }
         }
     }
