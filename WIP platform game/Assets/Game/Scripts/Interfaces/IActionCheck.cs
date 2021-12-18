@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IActionCheck
 {
-    public int Check(); 
-    public RaycastHit2D[] results { get; set; }
+    public Collider2D Check(); 
+    public Collider2D[] results { get; set; }
 }
