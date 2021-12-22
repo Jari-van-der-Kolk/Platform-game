@@ -13,27 +13,53 @@ public class InteractionSystem : MonoBehaviour
    
     //TODO you have automatic pickups as well
 
-    private IActionCheck actionCheck;
+    private IInteractionCheck InteractionCheck;
     
-    private void Awake() => actionCheck = GetComponent<IActionCheck>();
+    private void Awake() => InteractionCheck = GetComponent<IInteractionCheck>();
     
-    void Update()
+    void LateUpdate()
     { 
         AutoPickup();
-        PickupAction(Input.GetKeyDown(KeyCode.E), actionCheck.Check());
+        var interaction = InteractionCheck.Check();
+        if (interaction.Length > 0)
+        {
+            SinglePickup(Input.GetKeyDown(KeyCode.E), interaction[0]);
+        }
+        PickupAll(Input.GetKeyDown(KeyCode.R), InteractionCheck.Check());
         
     }
 
-    private void PickupAction(bool input, Collider2D itemCollider)
+    private void SinglePickup(bool input, Collider2D itemCollider)
     {
-        if (input) itemCollider.gameObject.SetActive(false);
+        // ReSharper disable once Unity.PerformanceCriticalCodeNullComparison
+        if (itemCollider != null)
+        {
+            var item = itemCollider.GetComponent<IInteract>();
+            item.DisplayText();
+            if (input)
+            {
+                item.Action();
+            } 
+        }
+        
     }
 
+    private void PickupAll(bool input, Collider2D[] itemColliders)
+    {
+        if (input)
+        {
+            foreach (var i in itemColliders)
+            {
+                i.GetComponent<IInteract>().Action();   
+            }
+        }
+    }
+    
     private void AutoPickup()
     {
         
     }
-    
+
 }
 /*for (int i = 0; i < actionCheck.results.Length; i++)
       {

@@ -2,8 +2,16 @@
 using System.Collections;
 
 [RequireComponent (typeof (Controller2D))]
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
+
+
+
+	[Header("MoveSpeed")]
+	[SerializeField] private float defaultSpeed;
+	[SerializeField] private float sprintingSpeed;
+	
 	public float maxJumpHeight = 4;
 	public float minJumpHeight = 1;
 	public float timeToJumpApex = .4f;
@@ -37,9 +45,12 @@ public class Player : MonoBehaviour {
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
+		defaultSpeed = moveSpeed;
+		sprintingSpeed = moveSpeed * 3 / 2;
 	}
 
 	void Update() {
+		IsSprinting();
 		CalculateVelocity ();
 		HandleWallSliding ();
 
@@ -120,6 +131,9 @@ public class Player : MonoBehaviour {
 		}
 
 	}
+
+	void IsSprinting() => moveSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintingSpeed : defaultSpeed;
+	
 
 	void CalculateVelocity() {
 		float targetVelocityX = directionalInput.x * moveSpeed;

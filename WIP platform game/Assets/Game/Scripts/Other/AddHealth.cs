@@ -18,5 +18,9 @@ public class AddHealth : MonoBehaviour, IInteract
         _playerHealth.ModifyHealth(10);
         gameObject.SetActive(false);
     }
-    
+
+    public string DisplayText()
+    {
+        return "Press [E] to pickup health";
+    }
 }
