@@ -7,7 +7,7 @@ public class InventorySystem : MonoBehaviour
     public static InventorySystem instance;
     
     private Dictionary<InventoryItemData, InventoryItem> _itemDictionary;
-    public List<InventoryItem> inventory; /*{ get; private set; }*/
+    public List<InventoryItem> inventory { get; private set; }
     
     void Awake()
     {
