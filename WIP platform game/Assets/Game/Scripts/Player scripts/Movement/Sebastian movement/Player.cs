@@ -4,10 +4,6 @@ using System.Collections;
 [RequireComponent (typeof (Controller2D))]
 public class Player : MonoBehaviour
 {
-
-
-
-
 	[Header("MoveSpeed")]
 	[SerializeField] private float defaultSpeed;
 	[SerializeField] private float sprintingSpeed;
@@ -102,6 +98,7 @@ public class Player : MonoBehaviour
 		}
 	}
 		
+//Todo make a knockback method that takes the direction of which way it has to propel itself towards.
 
 	void HandleWallSliding() {
 		wallDirX = (controller.collisions.left) ? -1 : 1;
