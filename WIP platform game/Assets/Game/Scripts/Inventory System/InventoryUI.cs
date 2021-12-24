@@ -38,7 +38,7 @@ public class InventoryUI : MonoBehaviour
             grid[x, y].prefab = Instantiate(gridCellPrefab, inventoryRect);
             grid[x, y].icon = grid[x, y].prefab.GetComponent<Image>();
             grid[x, y].rect = GetComponent<RectTransform>();
-            grid[x, y].prefab.transform.position = new Vector3(inventoryRect.position.x, inventoryRect.position.y);
+            grid[x, y].prefab.transform.position = new Vector3((inventoryRect.position.x + beginOffset.x) * (x + 1) / 3, (inventoryRect.position.y + beginOffset.y) * (y + 1) / 3);
          }
       }
    }
