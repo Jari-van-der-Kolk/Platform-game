@@ -14,6 +14,8 @@ public class TabGroup : MonoBehaviour
 
     public List<GameObject> objectToSwap;
 
+    public PanelGroup panelGroup;
+
     private void Start()
     {
         StartActiveTab();
@@ -59,6 +61,11 @@ public class TabGroup : MonoBehaviour
 
         selectedTab = tabButton;
         selectedTab.tabGroup.OnTabSelected(tabButton);
+
+        if (panelGroup != null)
+        {
+            panelGroup.SetPageIndex(tabButton.transform.GetSiblingIndex());
+        }
     }
     
     public void SetActive(int siblingIndex)
