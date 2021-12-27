@@ -11,8 +11,8 @@ public class Player : MonoBehaviour
 	public float maxJumpHeight = 4;
 	public float minJumpHeight = 1;
 	public float timeToJumpApex = .4f;
-	float accelerationTimeAirborne = .2f;
-	float accelerationTimeGrounded = .1f;
+	public float accelerationTimeAirborne = .2f;
+	public float accelerationTimeGrounded = .1f;
 	float moveSpeed = 6;
 
 	public Vector2 wallJumpClimb;
@@ -35,7 +35,9 @@ public class Player : MonoBehaviour
 	bool wallSliding;
 	int wallDirX;
 
-	void Start() {
+	void Start()
+	{
+		
 		controller = GetComponent<Controller2D> ();
 
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
@@ -128,7 +130,7 @@ public class Player : MonoBehaviour
 		}
 
 	}
-
+	
 	void IsSprinting() => moveSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintingSpeed : defaultSpeed;
 	
 
