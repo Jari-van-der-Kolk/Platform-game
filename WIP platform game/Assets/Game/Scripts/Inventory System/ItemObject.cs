@@ -10,7 +10,6 @@ public class ItemObject : MonoBehaviour, IInteract
     private void Awake()
     {
         icon = GetComponent<SpriteRenderer>();
-        //icon.sprite = referenceItem.icon;
     }
 
     public void Action()

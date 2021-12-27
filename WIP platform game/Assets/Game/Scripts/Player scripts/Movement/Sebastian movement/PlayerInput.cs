@@ -1,26 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (Player))]
+[RequireComponent (typeof (Movement))]
 public class PlayerInput : MonoBehaviour {
 
-	Player player;
+	Movement movement;
 
 	void Start () {
-		player = GetComponent<Player> ();
+		movement = GetComponent<Movement> ();
 	}
 
 	void Update () {
-		if (!player.lockDirectionalInput)
+		if (!movement.lockDirectionalInput)
 		{
 			Vector2 directionalInput = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
-			player.SetDirectionalInput (directionalInput);
+			movement.SetDirectionalInput (directionalInput);
 		}
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			player.OnJumpInputDown ();
+			movement.OnJumpInputDown ();
 		}
 		if (Input.GetKeyUp (KeyCode.Space)) {
-			player.OnJumpInputUp ();
+			movement.OnJumpInputUp ();
 		}
 	}
 }

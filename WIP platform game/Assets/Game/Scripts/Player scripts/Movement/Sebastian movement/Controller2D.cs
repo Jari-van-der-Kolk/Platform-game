@@ -12,11 +12,10 @@ public class Controller2D : RaycastController {
 	public override void Start() {
 		base.Start ();
 		collisions.faceDir = 1;
-
 	}
 
 	public void Move(Vector2 moveAmount, bool standingOnPlatform) {
-		Move (moveAmount, Vector2.zero, standingOnPlatform);
+		Move(moveAmount, Vector2.zero, standingOnPlatform);
 	}
 
 	public void Move(Vector2 moveAmount, Vector2 input, bool standingOnPlatform = false) {

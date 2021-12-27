@@ -15,7 +15,7 @@ public class AddHealth : MonoBehaviour, IInteract
 
     public void Action()
     {
-        _playerHealth.ModifyHealth(10);
+        //_playerHealth.ModifyHealth(10);
         gameObject.SetActive(false);
     }
 
