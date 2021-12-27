@@ -35,9 +35,22 @@ public class Player : MonoBehaviour
 	bool wallSliding;
 	int wallDirX;
 
+	[Header("Dash")] 
+
+
+	public float dashDuration;
+	public float dashDelayDuration;
+	public float strength;
+
+	[HideInInspector] public bool lockDirectionalInput;
+	private float dashTime;
+	[SerializeField]private float dashDelay;
+	private bool isDashing;
+	private float dashDir;
+
+
 	void Start()
 	{
-		
 		controller = GetComponent<Controller2D> ();
 
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
@@ -45,12 +58,16 @@ public class Player : MonoBehaviour
 		minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
 		defaultSpeed = moveSpeed;
 		sprintingSpeed = moveSpeed * 3 / 2;
+		dashTime = dashDuration;
+		dashDelay = dashDelayDuration;
+
 	}
 
 	void Update() {
 		IsSprinting();
 		CalculateVelocity ();
 		HandleWallSliding ();
+		HandleDash();
 
 		controller.Move (velocity * Time.deltaTime, directionalInput);
 
@@ -101,6 +118,44 @@ public class Player : MonoBehaviour
 	}
 		
 //Todo make a knockback method that takes the direction of which way it has to propel itself towards.
+
+	public void ChangeVelocityToDir(Vector2 dir)
+	{
+		velocity = Vector3.zero;
+		velocity = dir;
+	}
+
+	public void AddVelocityToDir(Vector2 dir) => velocity = dir;
+
+	public void HandleDash()
+	{
+		dashDelay -= Time.deltaTime;
+		if (dashDelay <= 0)
+		{
+			if (Input.GetKeyDown(KeyCode.LeftShift) && directionalInput != Vector2.zero && !(controller.collisions.left || controller.collisions.right))
+			{
+				isDashing = true;
+				dashDir = directionalInput.x;
+				lockDirectionalInput = true;
+			}
+			if (isDashing)
+			{
+				if (dashTime <= 0)
+				{
+					isDashing  = false;
+					lockDirectionalInput = false;
+					dashDelay = dashDelayDuration;
+					dashTime = dashDuration;
+				}
+				else
+				{
+					dashTime -= Time.deltaTime;
+					velocity.y = 0;
+					velocity.x = dashDir * strength;	
+				}
+			}	
+		}
+	}
 
 	void HandleWallSliding() {
 		wallDirX = (controller.collisions.left) ? -1 : 1;
