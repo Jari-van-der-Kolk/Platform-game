@@ -7,6 +7,8 @@ public class Movement : MonoBehaviour
 	[Header("Move speed")]
 	[SerializeField] float moveSpeed = 6;
 	public float accelerationTimeGrounded = .1f;
+	[SerializeField] private float moveDelay = 0.3f;
+
 	
  	float defaultSpeed;
  	float sprintingSpeed;
@@ -56,6 +58,8 @@ public class Movement : MonoBehaviour
 
 	void Start()
 	{
+		CollisionDamage.onEnemyHit += KnockBack;
+		
 		controller = GetComponent<Controller2D> ();
 
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
@@ -85,6 +89,20 @@ public class Movement : MonoBehaviour
 		}
 	}
 
+	void KnockBack(CollisionDamage hit, float dot)
+	{
+		StartCoroutine(DisableDirectionalInput(moveDelay));
+		if (dot > 0)
+		{
+			ChangeVelocityToDir(new Vector2(knockbackDir.x, knockbackDir.y));
+		}
+
+		if (dot < 0)
+		{
+			ChangeVelocityToDir(new Vector2(-knockbackDir.x, knockbackDir.y));
+		}
+	}
+	
 	public IEnumerator DisableDirectionalInput(float time)
 	{
 		directionalInput = Vector2.zero;

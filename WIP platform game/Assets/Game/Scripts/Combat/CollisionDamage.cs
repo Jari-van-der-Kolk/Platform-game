@@ -5,31 +5,27 @@ using UnityEngine;
 
 public class CollisionDamage : MonoBehaviour
 {
-    [SerializeField] private float moveDelay = 0.3f;
-    private Movement _movement;
-
-    private void Awake() => _movement = GetComponent<Movement>();
+    public float dot;
+    public static event Action<CollisionDamage, float> onEnemyHit = delegate{  };
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
-            Vector2 knockback = _movement.knockbackDir;
-            var enemyPos = other.transform.position;
-            var dot = Vector2.Dot(Vector2.right, (transform.position - enemyPos).normalized);
-            if (dot > 0)
-            {
-                StartCoroutine(_movement.DisableDirectionalInput(moveDelay)); 
-                _movement.ChangeVelocityToDir(new Vector2(knockback.x, knockback.y));
-            }
-            else if(dot < 0)
-            {
-                StartCoroutine(_movement.DisableDirectionalInput(moveDelay)); 
-                _movement.ChangeVelocityToDir(new Vector2(-knockback.x, knockback.y));
-            }
+            dot = Vector2.Dot(Vector2.right, (transform.position - other.transform.position).normalized);
+            onEnemyHit?.Invoke(this, dot);
         }
     }
-
-   
-     
 }
+
+/*Vector2 knockback = _movement.knockbackDir;
+var enemyPos = other.transform.position;
+var dot = Vector2.Dot(Vector2.right, (transform.position - enemyPos).normalized);
+if (dot > 0)
+{
+    _movement.ChangeVelocityToDir(new Vector2(knockback.x, knockback.y));
+}
+else if(dot < 0)
+{
+    _movement.ChangeVelocityToDir(new Vector2(-knockback.x, knockback.y));
+}*/
