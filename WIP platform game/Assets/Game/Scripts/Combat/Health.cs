@@ -10,10 +10,12 @@ public class Health : MonoBehaviour
 
     [SerializeField] private bool useEvent = true;
     [SerializeField] private UnityEvent hitEvent;
+    public bool canDamage;
+    
     
     public void ModifyHealth(int amount)
     {
-        _health += amount;
+        if(canDamage) _health += amount;
         if(useEvent) hitEvent?.Invoke();
         if(_health <= 0) Die();
     }

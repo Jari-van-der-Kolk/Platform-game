@@ -6,23 +6,26 @@ using UnityEngine;
 public class CollisionDamage : MonoBehaviour
 {
     [SerializeField] private float moveDelay = 0.3f;
+    private Movement _movement;
+
+    private void Awake() => _movement = GetComponent<Movement>();
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
-            var player = other.GetComponent<Movement>();
-            Vector2 knockback = player.knockbackDir;
-            var playerPos = other.transform.position;
-            var dot = Vector2.Dot(Vector2.right, (transform.position - playerPos).normalized);
+            Vector2 knockback = _movement.knockbackDir;
+            var enemyPos = other.transform.position;
+            var dot = Vector2.Dot(Vector2.right, (transform.position - enemyPos).normalized);
             if (dot > 0)
             {
-                StartCoroutine(player.DisableDirectionalInput(moveDelay)); 
-                player.ChangeVelocityToDir(new Vector2(-knockback.x, knockback.y));
+                StartCoroutine(_movement.DisableDirectionalInput(moveDelay)); 
+                _movement.ChangeVelocityToDir(new Vector2(knockback.x, knockback.y));
             }
             else if(dot < 0)
             {
-                StartCoroutine(player.DisableDirectionalInput(moveDelay)); 
-                player.ChangeVelocityToDir(new Vector2(knockback.x, knockback.y));
+                StartCoroutine(_movement.DisableDirectionalInput(moveDelay)); 
+                _movement.ChangeVelocityToDir(new Vector2(-knockback.x, knockback.y));
             }
         }
     }
