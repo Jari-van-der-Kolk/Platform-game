@@ -3,33 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Health))]
-public class OnHit : MonoBehaviour, IDamageable
+public abstract class OnHit : MonoBehaviour, IHitable
 {
-    [SerializeField] private Vector2 knockback;
-    private Health health;
-    private Rigidbody2D rb;
-    private Transform playerTransform;
     
+    [HideInInspector] public Health health;
+    [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] public Transform playerTransform;
+    [HideInInspector] public Transform t;
+
     private void Awake()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
         health = GetComponent<Health>();
+        t = GetComponent<Transform>();
     }
 
-    public void Hit(float dot)
-    {
-        if (dot > 0)
-        {
-            rb.velocity = -knockback;
-        }
-        if (dot <= 0)
-        {
-            rb.velocity = knockback;
-        }
-        health.ModifyHealth(-1);
-    }
+    public abstract void Hit(float dot);
 }
 
 

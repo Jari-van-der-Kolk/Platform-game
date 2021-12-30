@@ -3,27 +3,59 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGroundPatrol : MonoBehaviour
+public class EnemyGroundPatrol : OnHit
 {
-    [SerializeField] private bool mustPatrol;
-    [SerializeField] private bool mustTurn;
+    
     [SerializeField] private float walkSpeed;
     [SerializeField] private Transform groundCheckPos;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Collider2D bodyCollider;
+    [SerializeField] private Vector2 knockback;
 
-    private Rigidbody2D rb;
+    [SerializeField] private Vector2 groundCheckOffset;
+    [SerializeField] private Vector2 groundCheckSize;
 
-    private void Awake()
+    [SerializeField] private Collider2D groundCheck;
+
+    [SerializeField] private LayerMask mask;
+
+
+    [SerializeField] private bool isFlipped;
+
+    private SpriteRenderer sr;
+
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
     }
+
+    public override void Hit(float dot)
+    {
+        rb.velocity = Vector2.zero;
+
+        if (dot > 0)
+        {
+            Debug.Log("a");
+            rb.AddForce(new Vector2(knockback.x, knockback.y));
+        }
+        if (dot < 0)
+        {
+            Debug.Log("b");
+            rb.AddForce(new Vector2(-knockback.x, knockback.y));
+        }
+        health.ModifyHealth(-1);
+    }
+
+    
     private void FixedUpdate()
     {
-        Patrol();
-        if (CheckForFlip())
+        if (IsGrounded())
         {
-            Flip();
+            Patrol();
+            if (CheckForFlip())
+            {
+                Flip();
+            }
         }
     }
     void Patrol()
@@ -33,12 +65,20 @@ public class EnemyGroundPatrol : MonoBehaviour
 
     bool CheckForFlip()
     {
-          return Physics2D.OverlapCircle(groundCheckPos.position, 0.1f, groundMask) || bodyCollider.IsTouchingLayers(groundMask);
+        if (IsGrounded())
+            return Physics2D.OverlapCircle(groundCheckPos.position, 0.1f, groundMask) ||
+                   bodyCollider.IsTouchingLayers(groundMask);
+        return false;
     }
-    
+
+    bool IsGrounded()
+    {
+        return groundCheck.IsTouchingLayers(mask);
+    }
     public void Flip()
     {
-        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
+        isFlipped = !isFlipped;
+        sr.flipX = isFlipped;
         walkSpeed = -walkSpeed;
     }
 }

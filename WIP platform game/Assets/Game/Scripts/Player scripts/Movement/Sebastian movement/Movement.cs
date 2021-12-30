@@ -55,9 +55,6 @@ public class Movement : MonoBehaviour
 	int wallDirX;
 
 	
-	//TODO make a method that enables and disables your input for a certain amount of time 
-
-
 	void Start()
 	{
 		CollisionDamage.onEnemyHit += KnockBack;
