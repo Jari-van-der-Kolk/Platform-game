@@ -18,7 +18,6 @@ public class PlayerCombat : MonoBehaviour
     }
     void Update()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             Attack();
@@ -30,7 +29,9 @@ public class PlayerCombat : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(t.position + new Vector3(attackOffset.x * c.collisions.faceDir, attackOffset.y), attackRadius, enemyMask);
         foreach (Collider2D h in hits)
         {
-            h.GetComponent<Health>().ModifyHealth(-1);
+            Debug.Log("Fuck you");
+            float dot = Vector2.Dot(Vector2.right, (transform.position - h.transform.position).normalized);
+            h.GetComponent<IDamageable>().Hit(dot);
         }
     }
     private void OnDrawGizmosSelected()

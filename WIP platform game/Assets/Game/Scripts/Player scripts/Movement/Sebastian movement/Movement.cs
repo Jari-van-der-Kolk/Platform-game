@@ -6,7 +6,6 @@ public class Movement : MonoBehaviour
 {
 	[Header("Move speed")]
 	[SerializeField] float moveSpeed = 6;
-	public float accelerationTimeGrounded = .1f;
 	[SerializeField] private float moveDelay = 0.3f;
 
 	
@@ -17,10 +16,13 @@ public class Movement : MonoBehaviour
 	public float maxJumpHeight = 4;
 	public float minJumpHeight = 1;
 	public float timeToJumpApex = .4f;
-	public float accelerationTimeAirborne = .2f;
 	float maxJumpVelocity;
 	float minJumpVelocity;
 	float gravity;
+	
+	[Header("AccelerationTimers")]
+	public float accelerationTimeAirborne = .2f;
+	public float accelerationTimeGrounded = .1f;
 
 	
 	[Header("Wall Climbing")]
@@ -42,7 +44,7 @@ public class Movement : MonoBehaviour
 	private float dashDir;	
 
 	[Header("Hit")]
-	public Vector2 knockbackDir;
+	public Vector2 knockbackDir = new Vector2(10,7);
 
 	[HideInInspector] public bool lockDirectionalInput;
 	Vector3 velocity;
