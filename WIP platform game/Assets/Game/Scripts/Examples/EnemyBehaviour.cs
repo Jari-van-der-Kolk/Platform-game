@@ -21,19 +21,19 @@ public class EnemyBehaviour : StateMachine
         [HideInInspector]public Vector3 boxRadius;
         [HideInInspector]public Vector3 boxOffset;
         public LayerMask playerMask;
+        [HideInInspector] public LineRenderer lineRenderer;
 
 
         private Idle _idle;
         private Attack _attack;
         private Restart _restart;
 
-        [HideInInspector] public LineRenderer lineRenderer;
-        
+
         public EnemyBehaviour()
         {
-            _idle = new Idle(this);
+            /*_idle = new Idle(this);
             _attack = new Attack(this);
-            _restart = new Restart(this);
+            _restart = new Restart(this);*/
         }
 
         private void Awake()

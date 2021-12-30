@@ -4,11 +4,11 @@ using UnityEngine;
 
     public abstract class State
     {
-        protected EnemyBehaviour enemyBehaviour;
+        protected EnemyStateMachine enemyStateMachine;
 
-        public State(EnemyBehaviour enemyBehaviour)
+        public State(EnemyStateMachine enemyStateMachine)
         {
-            this.enemyBehaviour = enemyBehaviour;
+            this.enemyStateMachine = enemyStateMachine;
         }
         
         public abstract void EnterState();
