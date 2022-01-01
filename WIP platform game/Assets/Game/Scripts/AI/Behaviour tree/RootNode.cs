@@ -1,20 +1,19 @@
 ﻿using System.Net.Mail;
 using JBehaviourTree;
 
-    public class BehaviourTree
+    public class RootNode
     {
         public Node rootNode;
         public Node.State treeState = Node.State.Running;
 
-        public BehaviourTree(Node rootNode)
+        public RootNode(Node rootNode)
         {
             this.rootNode = rootNode;
         }
         
-        public Node.State Update()
+        public void Update()
         {
             if(rootNode.state == Node.State.Running)
                 treeState = rootNode.Update();
-            return treeState;
         }
     }
