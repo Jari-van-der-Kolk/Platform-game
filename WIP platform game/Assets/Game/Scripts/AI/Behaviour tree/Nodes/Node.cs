@@ -1,23 +1,43 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-[System.Serializable]
-public abstract class Node {
+namespace JBehaviourTree
+{
+    public abstract class Node
+    {
+        public enum State
+        {
+            Running,
+            Failure,
+            Success
+        }
 
-    /* Delegate that returns the state of the node.*/
-    public delegate NodeStates NodeReturn();
+        public State state = State.Running;
+        public bool started = false;
 
-    /* The current state of the node */
-    protected NodeStates m_nodeState;
+        public State Update()
+        {
+            if (!started)
+            {
+                OnStart();
+                started = true;
+            }
 
-    public NodeStates nodeState {
-        get { return m_nodeState; }
+            state = OnUpdate();
+
+            if (state == State.Failure || state == State.Success)    
+            {
+                OnStop();
+                started = false;
+            }
+
+            return state;
+        }
+
+        protected abstract void OnStart();
+        protected abstract void OnStop();
+        protected abstract State OnUpdate();
+
+
+
     }
-
-    /* The constructor for the node */
-    public Node() {}
-
-    /* Implementing classes use this method to valuate the desired set of conditions */
-    public abstract NodeStates Evaluate();
-
 }
