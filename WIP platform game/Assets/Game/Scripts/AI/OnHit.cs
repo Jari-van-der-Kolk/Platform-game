@@ -11,7 +11,7 @@ public abstract class OnHit : MonoBehaviour, IHitable
     [HideInInspector] public Transform playerTransform;
     [HideInInspector] public Transform t;
 
-    private void Awake()
+    private void OnEnable()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();

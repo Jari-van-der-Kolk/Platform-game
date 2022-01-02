@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Security.Cryptography;
 
 [RequireComponent (typeof (Controller2D))]
 public class Movement : MonoBehaviour
@@ -54,6 +55,9 @@ public class Movement : MonoBehaviour
 	bool wallSliding;
 	int wallDirX;
 
+	private bool left;
+	private bool right;
+
 	
 	void Start()
 	{
@@ -76,8 +80,9 @@ public class Movement : MonoBehaviour
 		CalculateVelocity ();
 		HandleWallSliding ();
 		HandleDash();
-
+		
 		controller.Move (velocity * Time.deltaTime, directionalInput);
+
 
 		if (controller.collisions.above || controller.collisions.below) {
 			if (controller.collisions.slidingDownMaxSlope) {
@@ -95,7 +100,6 @@ public class Movement : MonoBehaviour
 		{
 			ChangeVelocityToDir(new Vector2(knockbackDir.x, knockbackDir.y));
 		}
-
 		if (dot < 0)
 		{
 			ChangeVelocityToDir(new Vector2(-knockbackDir.x, knockbackDir.y));
@@ -147,11 +151,11 @@ public class Movement : MonoBehaviour
 			velocity.y = minJumpVelocity;
 		}
 	}
-		
-	public void ChangeVelocityToDir(Vector2 dir) //resets velocity and then changes dir
+
+	private void ChangeVelocityToDir(Vector2 dir) //resets velocity and then changes dir
 	{
 		velocity = Vector3.zero;
-		velocity = dir;
+		velocity = (Vector3)dir;
 	}
 
 	

@@ -17,10 +17,7 @@ namespace JBehaviourTree
             current = 0;
         }
 
-        protected override void OnStop()
-        {
-            //current = 0;
-        }
+        protected override void OnStop() { }
 
         protected override State OnUpdate()
         {

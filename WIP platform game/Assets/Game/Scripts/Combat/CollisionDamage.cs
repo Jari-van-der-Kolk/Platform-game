@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class CollisionDamage : MonoBehaviour
 {
-     private float dot;
+    private float dot;
     public static event Action<CollisionDamage, float> onEnemyHit = delegate{  };
     private Health health;
 

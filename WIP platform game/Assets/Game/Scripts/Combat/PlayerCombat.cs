@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Vector2 attackOffset;
     [SerializeField] private float attackRadius;
     [SerializeField] private LayerMask enemyMask;
+    [SerializeField] private float attackSpeed;
+    private float timer;
     
     private Transform t;
     private Controller2D c;
@@ -19,9 +22,13 @@ public class PlayerCombat : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        timer += Time.deltaTime * attackSpeed;
+        
+        if (Input.GetMouseButtonDown(0) && timer >= 1f)
         {
+            Debug.Log("Attack");
             Attack();
+            timer = 0;
         }
     }
     private void Attack()
@@ -30,7 +37,6 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider2D h in hits)
         {
             float dot = Vector2.Dot(Vector2.right, (h.transform.position - transform.position).normalized);
-            Debug.Log(dot);
             h.GetComponent<IHitable>().Hit(dot);
         }
     }
