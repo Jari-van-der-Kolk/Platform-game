@@ -14,12 +14,18 @@ using UnityEngine;
         {
             var log1 = new DebugLogNode("1");
             var log2 = new DebugLogNode("2");
+            var wait = new WaitNode(3f);
 
             var check = new GenericActionNode(BoolCheck1);
+
+            var selector = new SelectorNode(new List<Node>
+            {
+                check, log1
+            });
             
             var sequence = new SequenceNode(new List<Node>
             {
-                check  ,log1, log2
+                selector, wait, log2
             });
             
             var repeat = new RepeatNode(sequence);
@@ -34,9 +40,9 @@ using UnityEngine;
 
         private Node.State BoolCheck1()
         {
-            Debug.Log(1);
             if (check1)
             {
+                Debug.Log(1);
                 return Node.State.Success;
             }
             else
