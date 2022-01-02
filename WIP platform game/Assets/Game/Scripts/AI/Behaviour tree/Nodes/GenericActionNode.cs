@@ -1,4 +1,6 @@
-﻿namespace JBehaviourTree
+﻿using UnityEngine;
+
+namespace JBehaviourTree
 {
     public class GenericActionNode : LeafNode
     {
@@ -8,8 +10,10 @@
         public GenericActionNode(ActionNodeDelegate action) {
             m_action = action;
         }
-        
-        protected override void OnStart() { }
+
+        protected override void OnStart()
+        {
+        }
 
         protected override void OnStop() { }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace JBehaviourTree
 {
@@ -16,11 +17,15 @@ namespace JBehaviourTree
             current = 0;
         }
 
-        protected override void OnStop() { }
+        protected override void OnStop()
+        {
+            //current = 0;
+        }
 
         protected override State OnUpdate()
         {
             var child = children[current];
+            
             switch (child.Update())
             {
                 case State.Running:
