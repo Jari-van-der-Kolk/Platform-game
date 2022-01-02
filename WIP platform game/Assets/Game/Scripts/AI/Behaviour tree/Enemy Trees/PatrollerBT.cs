@@ -125,17 +125,25 @@ using UnityEngine;
             if (dot > 0)
             {
                 rb.velocity = Vector2.up;
-                StartCoroutine(ApplyKnockBack(.01f, true));
+                if (gameObject.activeSelf)
+                {
+                    StartCoroutine(ApplyKnockBack(.01f, true));
+                }
             }
             if (dot <= 0)
             {
                 rb.velocity = Vector2.up;
-                StartCoroutine(ApplyKnockBack(.01f, false));
+                if (gameObject.activeSelf)
+                {
+                    StartCoroutine(ApplyKnockBack(.01f, false));
+                }
             }
         }
 
         IEnumerator ApplyKnockBack(float delay, bool rightOrLeft)
         {
+           
+            
             yield return new WaitForSeconds(delay);
             if (rightOrLeft)
             {
