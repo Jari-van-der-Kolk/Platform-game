@@ -4,40 +4,44 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryCell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+namespace Inventory
 {
-
-    [SerializeField] private InventoryItemData itemData;
-    private Image icon;
-    private TextMeshProUGUI itemAmountDisplay;
-
-    private void Awake()
+    
+    public class InventoryCell : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        icon = GetComponent<Image>();
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (itemData != null)
+    
+        [SerializeField] private InventoryItemData itemData;
+        private Image icon;
+        private TextMeshProUGUI itemAmountDisplay;
+    
+        private void Awake()
+        {
+            icon = GetComponent<Image>();
+        }
+    
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (itemData != null)
+            {
+                
+            }
+        }
+    
+        public void OnPointerEnter(PointerEventData eventData)
         {
             
         }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        
-    }
-
-    private void ApplyDAtaToCell(InventoryItem item)
-    {
-        icon.sprite = item.data.icon;
-        itemAmountDisplay.text = item.stackSize.ToString();
-    }
     
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            
+        }
+    
+        private void ApplyDAtaToCell(InventoryItem item)
+        {
+            icon.sprite = item.data.icon;
+            itemAmountDisplay.text = item.stackSize.ToString();
+        }
+        
+    }
 }

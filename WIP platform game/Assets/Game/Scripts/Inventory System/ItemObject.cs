@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemObject : MonoBehaviour, IInteract
+namespace Inventory
 {
-    public InventoryItemData referenceItem;
-    private SpriteRenderer icon;
 
-    private void Awake()
+    public class ItemObject : MonoBehaviour, IInteract
     {
-        icon = GetComponent<SpriteRenderer>();
-    }
+        public InventoryItemData referenceItem;
+        private SpriteRenderer icon;
 
-    public void Action()
-    {
-        InventorySystem.instance.Add(referenceItem);
-        //deactivate the object you are picking up
-        Destroy(gameObject);
-    }
+        private void Awake()
+        {
+            icon = GetComponent<SpriteRenderer>();
+        }
 
-    public string DisplayText()
-    {
-        return "";
+        public void Action()
+        {
+            InventorySystem.instance.Add(referenceItem);
+            //deactivate the object you are picking up
+            Destroy(gameObject);
+        }
+
+        public string DisplayText()
+        {
+            return "";
+        }
     }
 }
-
 
 
 /*

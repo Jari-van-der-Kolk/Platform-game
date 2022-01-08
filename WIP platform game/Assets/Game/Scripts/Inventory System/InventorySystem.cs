@@ -2,68 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySystem : MonoBehaviour
+namespace Inventory
 {
-    public static InventorySystem instance;
-    
-    private Dictionary<InventoryItemData, InventoryItem> _itemDictionary;
-    public List<InventoryItem> inventory { get; private set; }
-    
-    void Awake()
-    {
-        Init();
-    }
 
-    public void Init()
+    public class InventorySystem : MonoBehaviour
     {
-        if (instance == null)
-        {
-            instance = this;
-        }else if (instance != null)
-        {
-            Destroy(this);
-        }
-        
-        inventory = new List<InventoryItem>();
-        _itemDictionary = new Dictionary<InventoryItemData, InventoryItem>();
-    }
-    
-    public InventoryItem Get(InventoryItemData referenceData)
-    {
-        if (_itemDictionary.TryGetValue(referenceData, out InventoryItem value))
-        {
-            return value;
-        }
-        return null;
-    }
-    
-    public void Add(InventoryItemData referenceData)
-    {
-        if (_itemDictionary.TryGetValue(referenceData, out InventoryItem value))
-        {
-            value.AddToStack();
-        }
-        else
-        {
-            InventoryItem newItem = new InventoryItem(referenceData);
-            inventory.Add(newItem);
-            _itemDictionary.Add(referenceData, newItem);
-        }
-    }
+        public static InventorySystem instance;
 
-    public void Remove(InventoryItemData referenceData)
-    {
-        if (_itemDictionary.TryGetValue(referenceData, out InventoryItem value))
-        {
-            value.RemoveFromStack();
+        private Dictionary<InventoryItemData, InventoryItem> _itemDictionary;
+        public List<InventoryItem> inventory { get; private set; }
 
-            if (value.stackSize == 0)
+        void Awake()
+        {
+            Init();
+        }
+
+        public void Init()
+        {
+            if (instance == null)
             {
-                inventory.Remove(value);
-                _itemDictionary.Remove(referenceData);
+                instance = this;
+            }
+            else if (instance != null)
+            {
+                Destroy(this);
+            }
 
+            inventory = new List<InventoryItem>();
+            _itemDictionary = new Dictionary<InventoryItemData, InventoryItem>();
+        }
+
+        public InventoryItem Get(InventoryItemData referenceData)
+        {
+            if (_itemDictionary.TryGetValue(referenceData, out InventoryItem value))
+            {
+                return value;
+            }
+
+            return null;
+        }
+
+        public void Add(InventoryItemData referenceData)
+        {
+            if (_itemDictionary.TryGetValue(referenceData, out InventoryItem value))
+            {
+                value.AddToStack();
+            }
+            else
+            {
+                InventoryItem newItem = new InventoryItem(referenceData);
+                inventory.Add(newItem);
+                _itemDictionary.Add(referenceData, newItem);
             }
         }
+
+        public void Remove(InventoryItemData referenceData)
+        {
+            if (_itemDictionary.TryGetValue(referenceData, out InventoryItem value))
+            {
+                value.RemoveFromStack();
+
+                if (value.stackSize == 0)
+                {
+                    inventory.Remove(value);
+                    _itemDictionary.Remove(referenceData);
+
+                }
+            }
+        }
+
     }
-    
 }
