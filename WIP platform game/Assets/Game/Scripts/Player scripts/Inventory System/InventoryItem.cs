@@ -1,24 +1,28 @@
 using System;
 
-[System.Serializable]
-public class InventoryItem
+namespace Inventory
 {
-    public InventoryItemData data; /*{ get; private set; }*/
-    public int stackSize; /*{ get; private set; }*/
 
-    public InventoryItem(InventoryItemData source)
+    [System.Serializable]
+    public class InventoryItem
     {
-        data = source;
-        AddToStack();
-    }
+        public InventoryItemData data; /*{ get; private set; }*/
+        public int stackSize; /*{ get; private set; }*/
 
-    public void AddToStack()
-    {
-        stackSize++;
-    }
+        public InventoryItem(InventoryItemData source)
+        {
+            data = source;
+            AddToStack();
+        }
 
-    public void RemoveFromStack()
-    {
-        stackSize--;
+        public void AddToStack()
+        {
+            stackSize++;
+        }
+
+        public void RemoveFromStack()
+        {
+            stackSize--;
+        }
     }
 }
