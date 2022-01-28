@@ -11,17 +11,19 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float attackRadius;
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private float attackSpeed;
-    private float timer;
+    [SerializeField]private float timer;
     
     private Transform t;
     private Controller2D c;
-    void Start()
+    void Awake()
     {
         c = GetComponentInParent<Controller2D>();
         t = GetComponent<Transform>();
     }
     void Update()
     {
+        Debug.Log("Attack");
+
         timer += Time.deltaTime * attackSpeed;
         
         if (Input.GetMouseButtonDown(0) && timer >= 1f)
@@ -33,7 +35,7 @@ public class PlayerCombat : MonoBehaviour
     }
     private void Attack()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(t.position + new Vector3(attackOffset.x * c.collisions.faceDir, attackOffset.y), attackRadius, enemyMask);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position + new Vector3(attackOffset.x * c.collisions.faceDir, attackOffset.y), attackRadius, enemyMask);
         foreach (Collider2D h in hits)
         {
             float dot = Vector2.Dot(Vector2.right, (h.transform.position - transform.position).normalized);
