@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private GameObject prefab;
+    [SerializeField] private float shootSpeed;
+    private float timer;
+    
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        timer += Time.deltaTime * shootSpeed;
+        if (timer >= 1f)
+        {
+            //shoot
+        }
     }
 }
