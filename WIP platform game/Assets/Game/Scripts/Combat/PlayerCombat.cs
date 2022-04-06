@@ -22,13 +22,11 @@ public class PlayerCombat : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log("Attack");
 
         timer += Time.deltaTime * attackSpeed;
         
         if (Input.GetMouseButtonDown(0) && timer >= 1f)
         {
-            Debug.Log("Attack");
             Attack();
             timer = 0;
         }
